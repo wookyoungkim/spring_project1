@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class UserRepositoryTest extends StudyApplicationTests{
 
     @Autowired      //Dependency Injection: 의존성 주입 -> 직접 객체를 만들지 않고 스프링이 직접 관리, 의존성 주
@@ -38,15 +41,36 @@ public class UserRepositoryTest extends StudyApplicationTests{
 
         user.ifPresent(user1 ->{
             System.out.println("user: "+user1);
+            System.out.println("email: "+ user1.getEmail());
+        });
+    }
+
+    @Test
+    public void update(){
+        Optional<User> user = userRepository.findById(2L);
+
+        user.ifPresent(user1 -> {
+            user1.setAccount("updated_user");
+            user1.setUpdatedAt(LocalDateTime.now());
+            user1.setUpdatedBy("update method");
+
+            userRepository.save(user1);
         });
 
     }
 
-    public void update(){
+    @Test
+    public void delete(){      //특정 아이디로 삭제하기기
+        Optional<User> user = userRepository.findById(1L);
 
-    }
+        assertTrue(user.isPresent());    // true
 
-    public void delete(){
+        user.ifPresent(user1 -> {
+            userRepository.delete(user1);   //delete()는 반환형이 x
+        });
 
-    }
+        Optional<User> deletedUser = userRepository.findById(1L);
+
+        assertFalse(deletedUser.isPresent());
+   }
 }
