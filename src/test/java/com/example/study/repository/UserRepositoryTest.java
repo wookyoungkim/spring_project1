@@ -1,8 +1,8 @@
 package com.example.study.repository;
 
 import com.example.study.StudyApplicationTests;
-import com.example.study.model.entity.Item;
 import com.example.study.model.entity.User;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,32 +21,36 @@ public class UserRepositoryTest extends StudyApplicationTests{
 
     @Test           //test실행시 해당 annotation 필요
     public void create(){
-        //쿼리문이 아닌 오브젝트를 이용해 데이터 관리 가능
+        String account = "test03";
+        String password = "pass123";
+        String status = "REGISTERED";
+        String email = "test03@gmail.com";
+        String phoneNumber = "010-0000-0000";
+        LocalDateTime registeredAt = LocalDateTime.now();
+        LocalDateTime createdAt = LocalDateTime.now();
+        String createdBy = "admin";
 
         User user = new User();
-        //user.setId();     -> auto increment 설정되어있음으로 값 설정해줄 필요 x
-        user.setAccount("TestUser02");
-        user.setEmail("TestUser01@gmail.com");
-        user.setPhoneNumber("010-1111-1221");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("TestUser02");
+        user.setAccount(account);
+        user.setPassword(password);
+        user.setStatus(status);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setRegisteredAt(registeredAt);
+        user.setCreatedAt(createdAt);
+        user.setCreatedBy(createdBy);
 
-        User newUser = userRepository.save(user);  //db에 저장된 새 객 user 반환-> auto increment된 id값까지
-
-        System.out.println("newUser: " + newUser);
-
+        User newUser = userRepository.save(user);
+        Assert.assertNotNull(newUser);
     }
 
     @Test
     @Transactional
     public void read(){
-        Optional<User> user = userRepository.findByAccount("TestUser02");    //db의 user table을 리스트로 전부 가져오
+        Optional<User> user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-0000-0000");  //제일 최근에 register된 유저 반환
 
         user.ifPresent(user1 ->{
-           user1.getOrderDetailList().stream().forEach(orderDetail -> {
-               Item item = orderDetail.getItem();
-               System.out.println(item);
-           });
+               System.out.println(user);
         });
     }
 

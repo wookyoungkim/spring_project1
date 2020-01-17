@@ -17,16 +17,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-
         //변수명과 콜럼이름 같으면 굳이 명시하지 않아도 됨
     private String account;
+    private String password;
+    private String status;
     private String email;
     private String phoneNumber;
+    private LocalDateTime registeredAt;
+    private LocalDateTime unregisteredAt;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")      //어떤 컬럼에 매핑?
-    private List<OrderDetail> orderDetailList;
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")      //어떤 컬럼에 매핑?
+//    private List<OrderDetail> orderDetailList;
 }

@@ -1,34 +1,36 @@
 package com.example.study.model.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class OrderDetail {
+public class Partner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+    private String name;
     private String status;
-    private LocalDateTime arrivalDate;
-    private Integer quantity;
-    private BigDecimal totalPrice;
+    private String address;
+    private String callPartner;
+    private String partnerNumber;
+    private String businessNumber;
+    private String ceoName;
+    private LocalDateTime registeredAt;
+    private LocalDateTime unregisteredAt;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
-    private Long itemId;
-    private Long orderGroupId;
+    private Long categoryId;
 
-
+//    @ManyToOne
+//    private Category category;
 }
