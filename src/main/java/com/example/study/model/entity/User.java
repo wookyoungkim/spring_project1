@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,23 +14,19 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user")       //user table에 매핑시킬것임을 명시 -> 클래스의 이름과 테이블의 이름이 같으면 굳이 명시하지 않아도
 public class User {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private long id;
+    private Long id;
 
         //변수명과 콜럼이름 같으면 굳이 명시하지 않아도 됨
     private String account;
-
     private String email;
-
     private String phoneNumber;
-
     private LocalDateTime createdAt;
-
     private String createdBy;
-
     private LocalDateTime updatedAt;
-
     private String updatedBy;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")      //어떤 컬럼에 매핑?
+    private List<OrderDetail> orderDetailList;
 }

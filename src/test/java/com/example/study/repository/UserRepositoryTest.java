@@ -1,10 +1,12 @@
 package com.example.study.repository;
 
 import com.example.study.StudyApplicationTests;
+import com.example.study.model.entity.Item;
 import com.example.study.model.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -36,12 +38,15 @@ public class UserRepositoryTest extends StudyApplicationTests{
     }
 
     @Test
+    @Transactional
     public void read(){
-        Optional<User> user = userRepository.findById(2L);    //db의 user table을 리스트로 전부 가져오
+        Optional<User> user = userRepository.findByAccount("TestUser02");    //db의 user table을 리스트로 전부 가져오
 
         user.ifPresent(user1 ->{
-            System.out.println("user: "+user1);
-            System.out.println("email: "+ user1.getEmail());
+           user1.getOrderDetailList().stream().forEach(orderDetail -> {
+               Item item = orderDetail.getItem();
+               System.out.println(item);
+           });
         });
     }
 

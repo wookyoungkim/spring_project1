@@ -13,7 +13,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @Document(indexName = "kim", type = "phone")
 public class Phone {
     @Id
-    private int id;
+    private Integer id;
     private String number;
     private String author;
 }

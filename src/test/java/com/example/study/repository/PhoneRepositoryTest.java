@@ -15,7 +15,7 @@ public class PhoneRepositoryTest extends StudyApplicationTests {
 
     @Test
     public void create(){
-        Phone phone = new Phone(3, "010-1111-1331", "kim3");
+        Phone phone = new Phone(4, "010-1111-1441", "kim4");
         Phone newPhone = phoneRepository.save(phone);
 
         System.out.println("newPhone: " + newPhone);
